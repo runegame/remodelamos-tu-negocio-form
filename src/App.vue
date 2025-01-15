@@ -1,11 +1,10 @@
 <template>
   <div class="kiire-form-register">
-    <FormKit
-      type="form"
-      @submit="submit"
-      :actions="false"
-      #default="{ disabled }"
-    >
+    <FormKit type="form" @submit="submit" :actions="false" #default="{ disabled }">
+      <div class="alert" :class="[`${alert.type}`]" v-if="alert.show">
+        {{ alert.message }}
+      </div>
+
       <FormKit
         type="text"
         id="name"
@@ -52,8 +51,8 @@
 
       <FormKit
         type="text"
-        id="business"
-        name="business"
+        id="nit"
+        name="nit"
         placeholder="NIT de tu negocio *"
         validation="required"
         :validation-messages="{
@@ -78,25 +77,45 @@
 import axios from 'axios'
 import { reactive } from 'vue'
 
-const form = reactive({
-  name: '',
-  email: '',
-  phone: '',
-  business: '',
-  nit: '',
+const alert = reactive({
+  message: '',
+  show: false,
+  type: 'success'
 })
 
-const submit = (fields) => {
+const submit = async (fields) => {
+  alert.message = ''
+  alert.show = false
+  alert.type = 'success'
+
   console.log(fields)
+
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  await delay(5000)
+  alert.message = 'Ocurrió un error, por favor intenta mas tarde'
+  alert.show = true
+  alert.type = 'error'
 
   // const data = {
   //   data: [
-  //     {...form}
+  //     {...fields}
   //   ]
   // };
-  //
+
   // axios.post('https://sheetdb.io/api/v1/c4u8t3m347fpr', data)
-  //   .then(response => console.log(response.data))
-  //   .catch(error => console.error(error));
+  //   .then(response => {
+  //     if (response.data.created === 1) {
+  //       alert.message = 'Gracias por registrarte'
+  //       alert.show = true
+  //       alert.type = 'success'
+  //     }
+  //   })
+  //   .catch(error => {
+  //     console.log(error)
+  //
+  //     alert.message = 'Ocurrió un error, por favor intenta mas tarde'
+  //     alert.show = true
+  //     alert.type = 'error'
+  //   });
 }
 </script>
