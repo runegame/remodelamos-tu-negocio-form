@@ -1,6 +1,12 @@
 <template>
   <div class="kiire-form-register">
-    <FormKit type="form" @submit="submit" :actions="false" #default="{ disabled }">
+    <FormKit
+      id="registerForm"
+      type="form"
+      @submit="submit"
+      :actions="false"
+      #default="{ disabled }"
+    >
       <div class="alert" :class="[`${alert.type}`]" v-if="alert.show">
         {{ alert.message }}
       </div>
@@ -75,7 +81,8 @@
 
 <script setup>
 import axios from 'axios'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import { getNode } from '@formkit/core';
 
 const alert = reactive({
   message: '',
@@ -100,6 +107,15 @@ const submit = async (fields) => {
         alert.message = 'Gracias por registrarte'
         alert.show = true
         alert.type = 'success'
+
+        const formNode = getNode('registerForm');
+        formNode.reset()
+      } else {
+        console.log(response)
+
+        alert.message = 'Ocurrió un error, por favor intenta mas tarde'
+        alert.show = true
+        alert.type = 'error'
       }
     })
     .catch(error => {
