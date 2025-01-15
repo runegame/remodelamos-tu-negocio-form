@@ -88,34 +88,26 @@ const submit = async (fields) => {
   alert.show = false
   alert.type = 'success'
 
-  console.log(fields)
+  const data = {
+    data: [
+      {...fields}
+    ]
+  };
 
-  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-  await delay(5000)
-  alert.message = 'Ocurrió un error, por favor intenta mas tarde'
-  alert.show = true
-  alert.type = 'error'
+  axios.post('https://sheetdb.io/api/v1/c4u8t3m347fpr', data)
+    .then(response => {
+      if (response.data.created === 1) {
+        alert.message = 'Gracias por registrarte'
+        alert.show = true
+        alert.type = 'success'
+      }
+    })
+    .catch(error => {
+      console.log(error)
 
-  // const data = {
-  //   data: [
-  //     {...fields}
-  //   ]
-  // };
-
-  // axios.post('https://sheetdb.io/api/v1/c4u8t3m347fpr', data)
-  //   .then(response => {
-  //     if (response.data.created === 1) {
-  //       alert.message = 'Gracias por registrarte'
-  //       alert.show = true
-  //       alert.type = 'success'
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.log(error)
-  //
-  //     alert.message = 'Ocurrió un error, por favor intenta mas tarde'
-  //     alert.show = true
-  //     alert.type = 'error'
-  //   });
+      alert.message = 'Ocurrió un error, por favor intenta mas tarde'
+      alert.show = true
+      alert.type = 'error'
+    });
 }
 </script>
