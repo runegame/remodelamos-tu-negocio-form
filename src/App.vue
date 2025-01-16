@@ -57,6 +57,18 @@
 
       <FormKit
         type="text"
+        id="city"
+        name="city"
+        placeholder="Ciudad de tu negocio *"
+        validation="required"
+        :validation-messages="{
+          required: 'La ciudad de tu negocio es necesaria',
+        }"
+        help="* Aplican restricciones según la ciudad"
+      />
+
+      <FormKit
+        type="text"
         id="nit"
         name="nit"
         placeholder="NIT de tu negocio *"
@@ -81,7 +93,7 @@
 
 <script setup>
 import axios from 'axios'
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { getNode } from '@formkit/core';
 
 const alert = reactive({
