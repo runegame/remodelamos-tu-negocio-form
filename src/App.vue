@@ -71,7 +71,7 @@
         type="text"
         id="nit"
         name="nit"
-        placeholder="NIT de tu negocio *"
+        placeholder="NIT de tu negocio o cédula *"
         validation="required"
         :validation-messages="{
           required: 'El NIT de tu negocio es necesario',
@@ -116,7 +116,7 @@ const submit = async (fields) => {
   axios.post('https://sheetdb.io/api/v1/c4u8t3m347fpr', data)
     .then(response => {
       if (response.data.created === 1) {
-        alert.message = 'Gracias por registrarte'
+        alert.message = 'Ya estás inscrito en Remodelamos tu negocio! Vende con Kiire, y a partir del 15 de febrero participa para ganar'
         alert.show = true
         alert.type = 'success'
 
